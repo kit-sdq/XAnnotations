@@ -8,9 +8,9 @@ Use this active annotation in an Xtend class to automatically obtain delegation 
 
 An example usage of @StaticDelegate can be found in the [API for OCL-aligned extension methods](https://github.com/kit-sdq/XOCL/blob/master/bundles/edu.kit.ipd.sdq.xocl.extensions/src/edu/kit/ipd/sdq/xocl/extensions/XOCLExtensionsAPI.xtend).
 
-<code>
+```java
 @StaticDelegate(delegationTargets=#[BooleanXOCLExtensions,ClassXOCLExtensions,...])
 class XOCLExtensionsAPI {
   ...
 }
-</code>
+```
