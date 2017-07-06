@@ -16,3 +16,19 @@ class XOCLExtensionsAPI {
   ...
 }
 ```
+
+## @Lazy
+
+[`@Lazy`](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/Lazy.xtend) can be declared on fields in order to initialise them lazily. That means that their initialiser code will not be executed before its first access:
+
+```xtend
+class Example {
+	@Lazy String field = expensiveComputation()
+	
+	def expensiveComputation() {
+		// will not be called before the first access of field
+	}
+}
+``` 
+
+To realise this behaviour, a getter `getField` will be generated through which the field will be accessed. `field` will be renamed to `_field` and should not be accessed directly. For more information, see [the annotation’s documentation](https://github.com/kit-sdq/XOCL/blob/master/bundles/edu.kit.ipd.sdq.xocl.extensions/src/edu/kit/ipd/sdq/xocl/extensions/XOCLExtensionsAPI.xtend).
