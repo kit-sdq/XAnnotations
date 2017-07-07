@@ -11,7 +11,7 @@
 
 	<artifactId>edu.kit.ipd.sdq.activextendannotations.updatesite.aggregated</artifactId>
 	<packaging>pom</packaging>
-	<name>SDQ Xannotations Aggregated Update Site</name>
+	<name>SDQ XAnnotations Aggregated Update Site</name>
 
 	<build>
 		<plugins>
