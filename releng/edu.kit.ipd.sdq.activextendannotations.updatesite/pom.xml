@@ -11,7 +11,7 @@
 	</parent>
 	
 	<artifactId>edu.kit.ipd.sdq.activextendannotations.updatesite</artifactId>
-	<name>SDQ Xannotations Update Site</name>
+	<name>SDQ XAnnotations Update Site</name>
 	<packaging>eclipse-repository</packaging>
 	
 </project>
