@@ -18,8 +18,8 @@ import org.eclipse.xtend.lib.macro.declaration.Visibility
  * and non-final static fields as these do not belong in a utility class and
  * were most likely added by accident.
  * 
- * Despite these changes to the generated source, this annotation is also meant
- * as a more declarative way of defining utility classes.
+ * Additionally to these changes to the generated source, this annotation is 
+ * also meant as a more declarative way of defining utility classes.
  */
 @Target(TYPE)
 @Active(UtilityProcessor)
