@@ -52,7 +52,8 @@ class UtilityProcessor implements TransformationParticipant<MutableTypeDeclarati
 			if (annotatedType instanceof MutableClassDeclaration) {
 				annotatedType.declaredConstructors.filter[visibility != Visibility.PRIVATE || parameters.length > 0].
 					forEach [
-						addError("A Utility class may not have a constructor.")
+						addError("A Utility class may only have a private, parameterless constructor " +
+							"(which is added automatically).")
 					]
 				annotatedType.declaredMethods.filter[!static].forEach [
 					addError("A Utility class may only have static methods.")
