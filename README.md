@@ -32,3 +32,14 @@ class Example {
 ``` 
 
 To realise this behaviour, a getter `getField` will be generated through which the field will be accessed. `field` will be renamed to `_field` and should not be accessed directly. For more information, see [the annotation’s documentation](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/Lazy.xtend).
+
+## @Utility
+
+[`@Utility`](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/Utility.xtend) can be declared on classes to make them Utility classes. This means that they:
+
+ * are `final`
+ * only have one private, parameterless constructor that does nothing
+ * may only have `static` methods
+ * may have no fields but `static final` ones
+ 
+This annotation is meant to save some keystrokes, but to make Utility classes easier to detect.
