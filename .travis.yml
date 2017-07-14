@@ -14,4 +14,4 @@ install: true
 script: mvn clean verify
 
 after_success:
-- . /tmp/BuildUtilities/travis-ci/deploy.sh xannotations releng/edu.kit.ipd.sdq.commons.activextendannotations.updatesite.aggregated final kit-sdq updatesite
+- . /tmp/BuildUtilities/travis-ci/deploy.sh xannotations releng/edu.kit.ipd.sdq.activextendannotations.updatesite.aggregated final kit-sdq updatesite
