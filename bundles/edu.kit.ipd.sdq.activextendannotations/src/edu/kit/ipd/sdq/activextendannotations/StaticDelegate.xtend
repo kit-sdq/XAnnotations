@@ -146,6 +146,8 @@ class ExportStaticMethodsProcessor implements TransformationParticipant<MutableT
 			]
 		}
 
+		// the following two methods were copied from 
+		// org.eclipse.xtend.lib.annotations.DelegateProcessor.Util
 		/**
 		 * Translates the the type parameters in `target` based on the provided
 		 * type parameters map.
