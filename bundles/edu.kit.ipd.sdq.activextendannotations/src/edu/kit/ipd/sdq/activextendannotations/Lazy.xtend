@@ -6,26 +6,24 @@ import org.eclipse.xtend.lib.macro.AbstractFieldProcessor
 import org.eclipse.xtend.lib.macro.Active
 import org.eclipse.xtend.lib.macro.TransformationContext
 import org.eclipse.xtend.lib.macro.declaration.MutableFieldDeclaration
-import org.eclipse.xtend.lib.macro.declaration.Visibility
+
+import static extension edu.kit.ipd.sdq.activextendannotations.VisibilityExtension.toXtendVisibility
 
 /**
  * Lazily initializes a field. A field annotated with {@code @Lazy} will get a
- * public getter that will, when called for the first time in the field’s
+ * getter that will, when called for the first time in the field’s
  * lifetime, execute the field’s initializer. Subsequent calls will use the 
  * computed value.
+ * 
+ * The generated getter will have the visibility defined in the annotation’s
+ * value, which defaults to {@link Visibility.PUBLIC}. The added helpers will
+ * have the visibility that’s defined on the annotated field, which allows
+ * to make them visible to subtypes.
  * 
  * The initializer is guaranteed to be called at the first access and only
  * once. Should it throw a runtime exception, that exception will be thrown at
  * first access. In that case, the field will have its 
  * {@link http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html default value}. 
- * 
- * There are some restrictions for fields that are annotated as being 
- * {@code @Lazy}:
- * 
- * <ul>
- * <li>They must have an initializer (obviously)
- * <li>They must be private
- * </ul>
  * 
  * The field itself will be renamed to have an underscore ({@code field} -> 
  * {@code _field}). It should <em>never</em> be reassigned by hand, as that 
@@ -45,41 +43,48 @@ import org.eclipse.xtend.lib.macro.declaration.Visibility
 @Target(ElementType.FIELD)
 @Active(LazyProcessor)
 annotation Lazy {
+	Visibility value = Visibility.PUBLIC
 }
 
 class LazyProcessor extends AbstractFieldProcessor {
 
 	override doTransform(MutableFieldDeclaration field, extension TransformationContext context) {
-		if (field.initializer === null)
+		if (field.initializer === null) {
 			field.addError("A lazy field must have an initializer.")
-
-		if (field.visibility != Visibility.PRIVATE)
-			field.addError("A lazy field must be private.")
-
+			return
+		}
+			
+		if (field.visibility == org.eclipse.xtend.lib.macro.declaration.Visibility.PUBLIC) { 
+			field.addWarning("A lazy field should not be public, as this makes internals visible to the outside.")
+		}
+			
 		val setter = field.declaringType.findDeclaredMethod('set' + field.simpleName.toFirstUpper, field.type)
-		if (setter !== null)
+		if (setter !== null) {
 			setter.addError("A lazy field cannot have a setter.")
+		}
 
 		val isInited = field.declaringType.addField('''_«field.simpleName»_isInitialised''') [
 			type = context.primitiveBoolean
 			initializer = '''false'''
-			visibility = Visibility.PRIVATE
+			visibility = field.visibility
 			static = field.static
 			primarySourceElement = field
 		]
-
+		
 		val initializer = field.declaringType.addMethod('''_«field.simpleName»_initialise''') [
 			returnType = field.type
 			static = field.static
-			visibility = Visibility.PRIVATE
+			visibility = field.visibility
 			body = field.initializer
+			primarySourceElement = field
 		]
-
+		
+		val visibilityValue = field.findAnnotation(Lazy.findTypeGlobally).getEnumValue('value')
+		val getterVisibility = Visibility.valueOf(visibilityValue.simpleName).toXtendVisibility(field.visibility)
 		field.declaringType.addMethod('get' + field.simpleName.toFirstUpper) [
-			field.markAsRead
-			field.initializer
-			returnType = field.type
+			returnType = initializer.returnType
 			static = field.static
+			visibility = getterVisibility
 			body = '''
 				if (!«isInited.simpleName») {
 					«isInited.simpleName» = true;
@@ -90,6 +95,7 @@ class LazyProcessor extends AbstractFieldProcessor {
 			primarySourceElement = field
 		]
 
+		field.markAsRead
 		field.simpleName = '''_«field.simpleName»'''
 		field.final = false
 	}
