@@ -14,7 +14,7 @@
       [TODO Enter License Description here.]
    </license>
    <requires>
-      <import feature="com.google.guava"/>
+      <import plugin="com.google.guava"/>
       <import feature="org.eclipse.xtend"/>
    </requires>
    <plugin
