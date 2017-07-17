@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/edu.kit.ipd.sdq.activextendannotations.feature_1.0.0.qualifier.jar" id="edu.kit.ipd.sdq.activextendannotations.feature" version="1.0.0.qualifier">
+      <category name="activextendannotations"/>
+   </feature>
+   <category-def name="activextendannotations" label="activextendannotations">
+      <description>
+	Additional active annotations for the Java-dialect Xtend
+      </description>
+   </category-def>
+</site>

@@ -6,9 +6,9 @@
 		<groupId>edu.kit.ipd.sdq.activextendannotations</groupId>
 		<artifactId>parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../releng/edu.kit.ipd.sdq.activextendannotations.parent</relativePath>
+		<relativePath>../edu.kit.ipd.sdq.activextendannotations.parent</relativePath>
 	</parent>
-	<artifactId>edu.kit.ipd.sdq.activextendannotations.bundles</artifactId>
-	<packaging>pom</packaging>
-	<name>activextendannotations Bundle Modules</name>
+	<artifactId>edu.kit.ipd.sdq.activextendannotations.updatesite</artifactId>
+	<name>activextendannotations Update Site</name>
+	<packaging>eclipse-repository</packaging>
 </project>

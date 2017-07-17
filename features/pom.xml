@@ -8,7 +8,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../releng/edu.kit.ipd.sdq.activextendannotations.parent</relativePath>
 	</parent>
-	<artifactId>edu.kit.ipd.sdq.activextendannotations.bundles</artifactId>
+	<artifactId>edu.kit.ipd.sdq.activextendannotations.features</artifactId>
 	<packaging>pom</packaging>
-	<name>activextendannotations Bundle Modules</name>
+	<name>activextendannotations Feature Modules</name>
 </project>
