@@ -1,21 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
-		<groupId>edu.kit.ipd.sdq</groupId>
-		<artifactId>releng</artifactId>
+		<groupId>edu.kit.ipd.sdq.activextendannotations</groupId>
+		<artifactId>parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../</relativePath>
+		<relativePath>../edu.kit.ipd.sdq.activextendannotations.parent</relativePath>
 	</parent>
-
 	<artifactId>edu.kit.ipd.sdq.activextendannotations.updatesite.aggregated</artifactId>
 	<packaging>pom</packaging>
-	<name>SDQ XAnnotations Aggregated Update Site</name>
-
+	<name>activextendannotations Aggregated Update Site</name>
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -37,27 +34,26 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-eclipserun-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
 					<repositories>
-					<!-- 	<repository>
-							<id>Eclipse Neon</id>
-							<layout>p2</layout>
-							<url>http://download.eclipse.org/releases/neon</url>
-						</repository> -->
 						<repository>
-							<id>Eclipse Neon Updates</id>
+							<id>Eclipse Oxygen</id>
 							<layout>p2</layout>
-							<url>http://download.eclipse.org/eclipse/updates/4.6</url>
+							<url>http://download.eclipse.org/releases/oxygen</url>
+						</repository>
+						<repository>
+							<id>Eclipse Oxygen Updates</id>
+							<layout>p2</layout>
+							<url>http://download.eclipse.org/eclipse/updates/4.7</url>
 						</repository>
 						<repository>
 							<id>Eclipse CBI Aggregator</id>
 							<layout>p2</layout>
-							<url>http://download.eclipse.org/cbi/updates/aggregator/ide/4.6/</url>
+							<url>http://download.eclipse.org/cbi/updates/aggregator/ide/4.6</url>
 						</repository>
 					</repositories>
 					<jvmArgs>
@@ -96,7 +92,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			
 		</plugins>
 	</build>
 </project>

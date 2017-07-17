@@ -2,9 +2,9 @@ language: java
 sudo: required
 jdk:
   - oraclejdk8
-cache:
-  directories:
-   - $HOME/.m2
+cache:  
+  directories:  
+   - $HOME/.m2  
 
 before_install:
     - git clone --depth 1 https://github.com/kit-sdq/BuildUtilities.git /tmp/BuildUtilities

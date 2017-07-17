@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>releng</artifactId>
+		<groupId>edu.kit.ipd.sdq.activextendannotations</groupId>
+		<artifactId>parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath>../</relativePath>
-		<groupId>edu.kit.ipd.sdq</groupId>
+		<relativePath>../edu.kit.ipd.sdq.activextendannotations.parent</relativePath>
 	</parent>
-	
 	<artifactId>edu.kit.ipd.sdq.activextendannotations.updatesite</artifactId>
-	<name>SDQ XAnnotations Update Site</name>
+	<name>activextendannotations Update Site</name>
 	<packaging>eclipse-repository</packaging>
-	
 </project>
