@@ -24,6 +24,8 @@ import org.eclipse.xtend.lib.macro.declaration.TypeDeclaration
 import org.eclipse.xtend.lib.macro.declaration.MemberDeclaration
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
+import static extension edu.kit.ipd.sdq.activextendannotations.VisibilityExtension.toXtendVisibility
+
 /**
  * Adds static delegate methods to all accessible static methods of the
  * declared types. This annotation can be used multiple times on the same type
@@ -245,33 +247,6 @@ class ExportStaticMethodsProcessor implements TransformationParticipant<MutableT
 				}
 			}
 			validAnnotations
-		}
-
-		/**
-		 * Converts a {@link Visibility} instance to Xtend’s
-		 * {@link org.eclipse.xtend.lib.macro.declaration.Visibility}. Uses the
-		 * provided `defaultVisibility` if the instance is 
-		 * {@link Visibility.AS_DECLARED}.
-		 * 
-		 * @param visibility The visibility to convert.
-		 * @param defaultVisibility The visibility to use if `visibility` is
-		 * {@link Visibility.AS_DECLARED}
-		 */
-		def private static toXtendVisibility(Visibility visibility,
-			org.eclipse.xtend.lib.macro.declaration.Visibility defaultVisibility) {
-			switch (visibility) {
-				case PRIVATE:
-					org.eclipse.xtend.lib.macro.declaration.Visibility.PRIVATE
-				case PACKAGE: {
-					org.eclipse.xtend.lib.macro.declaration.Visibility.DEFAULT
-				}
-				case PUBLIC: {
-					org.eclipse.xtend.lib.macro.declaration.Visibility.PUBLIC
-				}
-				case AS_DECLARED: {
-					defaultVisibility
-				}
-			}
 		}
 
 		/**
