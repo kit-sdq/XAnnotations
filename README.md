@@ -45,3 +45,8 @@ To realise this behaviour, a getter `getField` will be generated through which t
  * may have no fields but `static final` ones
  
 This annotation is meant to save some keystrokes, but to make Utility classes easier to detect.
+
+## @DelegateDeclared
+[`@DelegateDeclared`](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/DelegateDeclared.xtend) is a variant of the Xtend @Delegate active annotation that only delegates members that are declared in the interfaces which are implemented directly by the class that uses this annotation.
+
+For example, when delegating methods from an interface, only the methods declared in that interface are delegated. The methods that are declared in other interfaces which this interface extends are not delegated.
