@@ -6,7 +6,7 @@
    <feature id="edu.kit.ipd.sdq.activextendannotations.feature.source" version="1.0.0.qualifier">
       <category name="activextendannotations"/>
    </feature>
-   <category-def name="activextendannotations" label="activextendannotations">
+   <category-def name="activextendannotations" label="Active Xtend Annotations">
       <description>
 	Additional active annotations for the Java-dialect Xtend
       </description>
