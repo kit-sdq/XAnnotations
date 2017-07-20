@@ -15,7 +15,7 @@
    </license>
    <requires>
       <import plugin="com.google.guava"/>
-      <import feature="org.eclipse.xtend"/>
+      <import feature="org.eclipse.xtend.source"/>
    </requires>
    <plugin
          id="edu.kit.ipd.sdq.activextendannotations"
