@@ -119,9 +119,10 @@ class ExportStaticMethodsProcessor implements TransformationParticipant<MutableT
 			// add an @Inline annotation if this does not break things because
 			// of visibility
 			if (method.isAsVisibleAsAs(copy)) {
+				val pLen = method.parameters.length
 				copy.addAnnotation(newAnnotationReference(Inline) [
 					setStringValue(
-						'value', '''«method.declaringType.simpleName».«method.simpleName»(«FOR i : 1 .. method.parameters.length SEPARATOR ', '»$«i»«ENDFOR»)''')
+						'value', '''$«pLen + 1».«method.simpleName»(«FOR i : 1 .. pLen SEPARATOR ', '»$«i»«ENDFOR»)''')
 					setClassValue('imported', method.declaringType.newTypeReference)
 				])
 			}
