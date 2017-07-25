@@ -5,7 +5,7 @@
       <repositories location="../edu.kit.ipd.sdq.activextendannotations.updatesite/target/repository"/>
     </contributions>
     <contributions label="externals">
-      <repositories location="http://download.eclipse.org/releases/oxygen/" mirrorArtifacts="false">
+      <repositories location="http://sdqbuild.ipd.kit.edu/nexus/content/groups/eclipse-oxygen-complete/" mirrorArtifacts="false">
         <features name="org.eclipse.xtend.sdk.feature.group" versionRange="2.12.0"/>
       </repositories>
     </contributions>

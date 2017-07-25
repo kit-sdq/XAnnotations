@@ -19,7 +19,7 @@
     <repository>
       <id>Eclipse Oxygen</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/oxygen</url>
+      <url>http://sdqbuild.ipd.kit.edu/nexus/content/groups/eclipse-oxygen-complete</url>
     </repository>
   </repositories>
   <build>
