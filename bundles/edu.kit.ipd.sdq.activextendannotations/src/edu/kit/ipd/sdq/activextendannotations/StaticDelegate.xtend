@@ -18,7 +18,6 @@ import java.util.Set
 import java.util.ArrayList
 import java.util.HashMap
 import org.eclipse.xtend.lib.macro.declaration.TypeReference
-import java.util.Map
 import org.eclipse.xtend.lib.macro.declaration.ResolvedMethod
 import org.eclipse.xtend.lib.macro.declaration.TypeDeclaration
 import org.eclipse.xtend.lib.macro.declaration.MemberDeclaration
@@ -96,12 +95,12 @@ class ExportStaticMethodsProcessor implements TransformationParticipant<MutableT
 		def private createDelegationTo(MutableTypeDeclaration target, ResolvedMethod resolvedMethod,
 			Procedures.Procedure1<MutableMethodDeclaration> furtherInitialiser) {
 			val method = resolvedMethod.declaration
-			val typeParameterMappings = new HashMap<TypeReference, TypeReference>
+			val extension typeCopier = new TypeCopier(context)
 
 			val copy = target.addMethod(method.simpleName) [
-				copyTypeParametersFrom(resolvedMethod, typeParameterMappings)
+				copyTypeParametersFrom(resolvedMethod)
 				primarySourceElement = method.declaringType
-				returnType = resolvedMethod.resolvedReturnType.replace(typeParameterMappings)
+				returnType = resolvedMethod.resolvedReturnType.replaceTypeParameters
 				varArgs = method.varArgs
 				docComment = method.docComment
 				static = true
@@ -112,7 +111,7 @@ class ExportStaticMethodsProcessor implements TransformationParticipant<MutableT
 			]
 			method.annotations.forEach[copy.addAnnotation(it)]
 			resolvedMethod.resolvedParameters.forEach [
-				copy.addParameter(it.declaration.simpleName, it.resolvedType.replace(typeParameterMappings))
+				copy.addParameter(it.declaration.simpleName, it.resolvedType.replaceTypeParameters)
 			]
 			furtherInitialiser.apply(copy)
 
@@ -127,59 +126,6 @@ class ExportStaticMethodsProcessor implements TransformationParticipant<MutableT
 				])
 			}
 			copy
-		}
-
-		/**
-		 * Copies the type parameters from the `source` method to the `target`
-		 *  method while populating the provided type parameters map.
-		 * 
-		 * @param target The method declaration to copy the type parameters to.
-		 * @param source The method declaration to copy the type parameters 
-		 * from.
-		 * @param typeParameterMappings A map that contains the translations
-		 * from the type parameters in the old method to the type parameters
-		 * in the copied method.
-		 */
-		def private copyTypeParametersFrom(MutableMethodDeclaration target, ResolvedMethod source,
-			Map<TypeReference, TypeReference> typeParameterMappings) {
-			source.resolvedTypeParameters.forEach [ param |
-				val copy = target.addTypeParameter(param.declaration.simpleName, param.resolvedUpperBounds)
-				typeParameterMappings.put(param.declaration.newTypeReference, copy.newTypeReference)
-				copy.upperBounds = copy.upperBounds.map[replace(typeParameterMappings)]
-			]
-		}
-
-		// the following two methods were copied from 
-		// org.eclipse.xtend.lib.annotations.DelegateProcessor.Util
-		/**
-		 * Translates the the type parameters in `target` based on the provided
-		 * type parameters map.
-		 * 
-		 * @param target The type reference to replace type parameters in.
-		 * @param mappings A type parameters map that was created by
-		 * {@link #copyTypeParametersFrom}.
-		 */
-		def private TypeReference replace(TypeReference target,
-			Map<? extends TypeReference, ? extends TypeReference> mappings) {
-			mappings.entrySet.fold(target)[result, mapping|result.replace(mapping.key, mapping.value)]
-		}
-
-		def private TypeReference replace(TypeReference target, TypeReference oldType, TypeReference newType) {
-			if (target == oldType)
-				return newType
-			if (!target.actualTypeArguments.isEmpty)
-				if (target.type !== null) {
-					return newTypeReference(target.type, target.actualTypeArguments.map[replace(oldType, newType)])
-				}
-			if (target.wildCard) {
-				if (target.upperBound != object)
-					return target.upperBound.replace(oldType, newType).newWildcardTypeReference
-				else if (!target.lowerBound.isAnyType)
-					return target.lowerBound.replace(oldType, newType).newWildcardTypeReferenceWithLowerBound
-			}
-			if (target.isArray)
-				return target.arrayComponentType.replace(oldType, newType).newArrayTypeReference
-			return target
 		}
 
 		/**

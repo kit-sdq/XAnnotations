@@ -50,3 +50,54 @@ This annotation is meant to save some keystrokes, but to make Utility classes ea
 [`@DelegateDeclared`](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/DelegateDeclared.xtend) is a variant of the Xtend @Delegate active annotation that only delegates members that are declared in the interfaces which are implemented directly by the class that uses this annotation.
 
 For example, when delegating methods from an interface, only the methods declared in that interface are delegated. The methods that are declared in other interfaces which this interface extends are not delegated.
+
+## @CloseResource
+
+[`@CloseResource`](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/CloseResource.xtend) is a replacement for Java’s try with resources, which is [not supported in Xtend](https://bugs.eclipse.org/bugs/show_bug.cgi?id=366020). Resource parameters annotated with it will be closed when the method exits – regardless if that happens by returning or by throwing an exception.
+
+So instead of writing (in Java):
+
+```java
+public static void writeToFileZipFileContents(String zipFileName,
+    String outputFileName) throws IOException {
+	Charset charset = StandardCharsets.US_ASCII;
+    Path outputFilePath = Paths.get(outputFileName);
+
+    try (
+        ZipFile zf = new ZipFile(zipFileName);
+        BufferedWriter writer = Files.newBufferedWriter(outputFilePath, charset)
+    ) {
+        for (Enumeration entries = zf.entries(); entries.hasMoreElements();) {
+            String newLine = System.getProperty("line.separator");
+            String zipEntryName =
+                 ((ZipEntry)entries.nextElement()).getName() + newLine;
+            writer.write(zipEntryName, 0, zipEntryName.length());
+        }
+    }
+}
+```
+
+one would write in Xtend:
+
+```Xtend
+def static void writeToFileZipFileContents(String zipFileName,
+    String outputFileName) throws IOException {
+    val charset = StandardCharsets.US_ASCII
+    val outputFilePath = Paths.get(outputFileName)
+
+    writeZipFile(new ZipFile(zipFileName),
+        Files.newBufferedWriter(outputFilePath, charset))
+}
+
+def private static void writeZipFile(@CloseResource ZipFile zf,
+    @CloseResource Writer writer) {
+    for (var entries = zf.entries(); entries.hasMoreElements();) {
+        String newLine = System.getProperty("line.separator")
+        String zipEntryName =
+             ((ZipEntry)entries.nextElement()).getName() + newLine
+        writer.write(zipEntryName, 0, zipEntryName.length())
+    }
+}
+
+```
+(the example was taken from the [Oracle Docs](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html))
