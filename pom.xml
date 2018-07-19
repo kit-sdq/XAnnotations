@@ -12,6 +12,5 @@
   <modules>
     <module>releng/edu.kit.ipd.sdq.activextendannotations.aggregator</module>
     <module>releng/edu.kit.ipd.sdq.activextendannotations.updatesite</module>
-    <module>releng/edu.kit.ipd.sdq.activextendannotations.updatesite.aggregated</module>
   </modules>
 </project>
