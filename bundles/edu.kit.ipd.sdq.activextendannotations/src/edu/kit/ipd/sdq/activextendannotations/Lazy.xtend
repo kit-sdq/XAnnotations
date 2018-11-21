@@ -8,6 +8,7 @@ import org.eclipse.xtend.lib.macro.TransformationContext
 import org.eclipse.xtend.lib.macro.declaration.MutableFieldDeclaration
 
 import static extension edu.kit.ipd.sdq.activextendannotations.VisibilityExtension.toXtendVisibility
+import org.eclipse.xtend.lib.macro.declaration.FieldDeclaration
 
 /**
  * Lazily initializes a field. A field annotated with {@code @Lazy} will get a
@@ -23,7 +24,12 @@ import static extension edu.kit.ipd.sdq.activextendannotations.VisibilityExtensi
  * The initializer is guaranteed to be called at the first access and only
  * once. Should it throw a runtime exception, that exception will be thrown at
  * first access. In that case, the field will have its 
- * {@link http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html default value}. 
+ * {@link http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html default value}.
+ * 
+ * The variable check and call to the initializer is <em>not synchronized</em> by
+ * default, which means that the implementation is not thread safe and may call the
+ * initialiser multiple times when called from different threads. If you need thread
+ * safety, set {@code synchronizeInitialization} to {@code true}.
  * 
  * The field itself will be renamed to have an underscore ({@code field} -> 
  * {@code _field}). It should <em>never</em> be reassigned by hand, as that 
@@ -44,6 +50,7 @@ import static extension edu.kit.ipd.sdq.activextendannotations.VisibilityExtensi
 @Active(LazyProcessor)
 annotation Lazy {
 	Visibility value = Visibility.PUBLIC
+	boolean synchronizeInitialization = false
 }
 
 class LazyProcessor extends AbstractFieldProcessor {
@@ -53,24 +60,30 @@ class LazyProcessor extends AbstractFieldProcessor {
 			field.addError("A lazy field must have an initializer.")
 			return
 		}
-			
-		if (field.visibility == org.eclipse.xtend.lib.macro.declaration.Visibility.PUBLIC) { 
+
+		if (field.visibility == org.eclipse.xtend.lib.macro.declaration.Visibility.PUBLIC) {
 			field.addWarning("A lazy field should not be public, as this makes internals visible to the outside.")
 		}
-			
+
 		val setter = field.declaringType.findDeclaredMethod('set' + field.simpleName.toFirstUpper, field.type)
 		if (setter !== null) {
 			setter.addError("A lazy field cannot have a setter.")
 		}
+
+		val annotation = field.findAnnotation(Lazy.findTypeGlobally)
+		val getterVisibility = Visibility.valueOf(annotation.getEnumValue('value').simpleName).
+			toXtendVisibility(field.visibility)
+		val synchronizeAccess = annotation.getBooleanValue('synchronizeInitialization')
 
 		val isInited = field.declaringType.addField('''_«field.simpleName»_isInitialised''') [
 			type = context.primitiveBoolean
 			initializer = '''false'''
 			visibility = field.visibility
 			static = field.static
+			volatile = field.volatile || synchronizeAccess
 			primarySourceElement = field
 		]
-		
+
 		val initializer = field.declaringType.addMethod('''_«field.simpleName»_initialise''') [
 			returnType = field.type
 			static = field.static
@@ -78,25 +91,48 @@ class LazyProcessor extends AbstractFieldProcessor {
 			body = field.initializer
 			primarySourceElement = field
 		]
-		
-		val visibilityValue = field.findAnnotation(Lazy.findTypeGlobally).getEnumValue('value')
-		val getterVisibility = Visibility.valueOf(visibilityValue.simpleName).toXtendVisibility(field.visibility)
+
+		val intialization = [| '''
+			try {
+				«field.simpleName» = «initializer.simpleName»();
+			} finally {
+				«isInited.simpleName» = true;
+			}
+		''' ]
 		field.declaringType.addMethod('get' + field.simpleName.toFirstUpper) [
 			returnType = initializer.returnType
 			static = field.static
 			visibility = getterVisibility
 			body = '''
 				if (!«isInited.simpleName») {
-					«isInited.simpleName» = true;
-					«field.simpleName» = «initializer.simpleName»();
+					«IF synchronizeAccess»
+						synchronized(«field.initSynchronizationTarget») {
+							if (!«isInited.simpleName») {
+								«intialization.apply»
+							}
+						}
+					«ELSE»
+						«intialization.apply»
+					«ENDIF»
 				}
 				return «field.simpleName»;
 			'''
 			primarySourceElement = field
 		]
 
-		field.markAsRead
-		field.simpleName = '''_«field.simpleName»'''
-		field.final = false
+		field => [
+			markAsRead()
+			simpleName = '''_«field.simpleName»'''
+			final = false
+			volatile = field.volatile || synchronizeAccess		
+		]
 	}
+	
+	def private static getInitSynchronizationTarget(FieldDeclaration field) {
+		if (field.isStatic) {
+			'''«field.declaringType.simpleName».class'''
+		} else {
+			'this'
+		}
+	} 
 }
