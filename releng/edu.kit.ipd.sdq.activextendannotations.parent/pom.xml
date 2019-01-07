@@ -17,10 +17,10 @@
   </properties>
   <repositories>
    <repository>
-     <id>Eclipse Oxygen</id>
+     <id>Eclipse 4.10 (2018-12)</id>
 	 <layout>p2</layout>
-	 <!--<url>http://download.eclipse.org/releases/oxygen</url>-->
-	 <url>http://ftp-stud.hs-esslingen.de/pub/Mirrors/eclipse/releases/oxygen</url>
+	 <!--<url>http://download.eclipse.org/releases/2018-12</url>-->
+	 <url>http://ftp-stud.hs-esslingen.de/pub/Mirrors/eclipse/releases/2018-12</url>
     </repository>
   </repositories>
   <build>
