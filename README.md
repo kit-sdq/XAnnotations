@@ -1,7 +1,7 @@
 # XAnnotations
 Additional [active annotations](https://eclipse.org/xtend/documentation/204_activeannotations.html) for the [Java-dialect Xtend](https://eclipse.org/xtend)
 
-Install from [nightly update site](https://kit-sdq.github.io/updatesite/release/xannotations) (only for use via "Install Software" in Eclipse)
+Install from [nightly update site](https://kit-sdq.github.io/updatesite/nightly/xannotations) (only for use via "Install Software" in Eclipse)
 
 ## @StaticDelegate
 Use the [active annotation @StaticDelegate](https://github.com/kit-sdq/XAnnotations/blob/master/bundles/edu.kit.ipd.sdq.activextendannotations/src/edu/kit/ipd/sdq/activextendannotations/StaticDelegate.xtend)  in an Xtend class to automatically obtain delegation methods for all accessible static methods of other classes. 
