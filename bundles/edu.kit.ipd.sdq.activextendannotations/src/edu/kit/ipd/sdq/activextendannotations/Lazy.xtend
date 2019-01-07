@@ -8,6 +8,7 @@ import org.eclipse.xtend.lib.macro.TransformationContext
 import org.eclipse.xtend.lib.macro.declaration.MutableFieldDeclaration
 
 import static extension edu.kit.ipd.sdq.activextendannotations.VisibilityExtension.toXtendVisibility
+import static org.eclipse.xtend.lib.macro.declaration.Visibility.PRIVATE
 import org.eclipse.xtend.lib.macro.declaration.FieldDeclaration
 
 /**
@@ -78,7 +79,7 @@ class LazyProcessor extends AbstractFieldProcessor {
 		val isInited = field.declaringType.addField('''_«field.simpleName»_isInitialised''') [
 			type = context.primitiveBoolean
 			initializer = '''false'''
-			visibility = field.visibility
+			visibility = PRIVATE
 			static = field.static
 			volatile = field.volatile || synchronizeAccess
 			primarySourceElement = field
@@ -87,7 +88,7 @@ class LazyProcessor extends AbstractFieldProcessor {
 		val initializer = field.declaringType.addMethod('''_«field.simpleName»_initialise''') [
 			returnType = field.type
 			static = field.static
-			visibility = field.visibility
+			visibility = PRIVATE
 			body = field.initializer
 			primarySourceElement = field
 		]
@@ -124,7 +125,8 @@ class LazyProcessor extends AbstractFieldProcessor {
 			markAsRead()
 			simpleName = '''_«field.simpleName»'''
 			final = false
-			volatile = field.volatile || synchronizeAccess		
+			volatile = field.volatile || synchronizeAccess
+			visibility = PRIVATE
 		]
 	}
 	
