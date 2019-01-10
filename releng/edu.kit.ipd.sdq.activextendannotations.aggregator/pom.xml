@@ -5,7 +5,7 @@
   <parent>
     <groupId>edu.kit.ipd.sdq.activextendannotations</groupId>
     <artifactId>parent</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <relativePath>../edu.kit.ipd.sdq.activextendannotations.parent</relativePath>
   </parent>
   <artifactId>edu.kit.ipd.sdq.activextendannotations.aggregator</artifactId>

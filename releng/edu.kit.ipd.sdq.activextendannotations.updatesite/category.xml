@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/edu.kit.ipd.sdq.activextendannotations.feature_1.2.0.qualifier.jar" id="edu.kit.ipd.sdq.activextendannotations.feature" version="1.2.0.qualifier">
+   <feature url="features/edu.kit.ipd.sdq.activextendannotations.feature_1.2.0.jar" id="edu.kit.ipd.sdq.activextendannotations.feature" version="1.2.0">
       <category name="activextendannotations"/>
    </feature>
-   <feature id="edu.kit.ipd.sdq.activextendannotations.feature.source" version="1.2.0.qualifier">
+   <feature id="edu.kit.ipd.sdq.activextendannotations.feature.source" version="1.2.0">
       <category name="activextendannotations"/>
    </feature>
    <category-def name="activextendannotations" label="Active Xtend Annotations">
