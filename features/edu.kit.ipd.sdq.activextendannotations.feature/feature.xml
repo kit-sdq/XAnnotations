@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="edu.kit.ipd.sdq.activextendannotations.feature"
-      label="activextendannotations"
+      label="%featureName"
       version="1.2.0.qualifier"
-      provider-name="SDQ">
-   <description url="http://www.example.com/description">
-      Additional active annotations for the Java-dialect Xtend
-   </description>
-   <copyright url="http://www.example.com/copyright">
-      [TODO Enter Copyright Description here.]
-   </copyright>
-   <license url="http://www.example.com/license">
-      [TODO Enter License Description here.]
-   </license>
-   <requires>
-      <import plugin="com.google.guava"/>
-      <import feature="org.eclipse.xtend.source"/>
-   </requires>
-   <plugin
+      provider-name="%providerName">>
+
+	<description>
+      %description
+	</description>
+
+	<copyright url="%copyrightURL">
+      %copyright
+	</copyright>
+
+	<license url="%licenseURL">
+      %license
+	</license>
+
+	<requires>
+		<import plugin="com.google.guava"/>
+		<import feature="org.eclipse.xtend.source"/>
+	</requires>
+
+	<plugin
          id="edu.kit.ipd.sdq.activextendannotations"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>
