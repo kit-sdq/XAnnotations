@@ -32,6 +32,16 @@
         <extensions>true</extensions>
       </plugin>
 
+      <!-- Use Tycho compiler without project-specific settings -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-compiler-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <configuration>
+          <useProjectSettings>false</useProjectSettings>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
