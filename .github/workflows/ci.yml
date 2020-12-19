@@ -45,7 +45,7 @@ jobs:
           deploy_key: ${{ secrets.UPDATE_SITE_DEPLOY_KEY }}
           external_repository: kit-sdq/updatesite
           destination_dir: nightly/xannotations
-          publish_dir: releng/edu.kit.ipd.sdq.xannotations.updatesite/target/repository
+          publish_dir: releng/edu.kit.ipd.sdq.activextendannotations.updatesite/target/repository
           publish_branch: master
       - name: Determine Release Version
         if: startsWith(github.ref, 'refs/tags/releases/') && github.repository_owner == 'kit-sdq'
@@ -60,7 +60,7 @@ jobs:
           deploy_key: ${{ secrets.UPDATE_SITE_DEPLOY_KEY }}
           external_repository: kit-sdq/updatesite
           destination_dir: release/xannotations/${{ steps.releaseVersion.outputs.tag }}
-          publish_dir: releng/edu.kit.ipd.sdq.xannotations.updatesite/target/repository
+          publish_dir: releng/edu.kit.ipd.sdq.activextendannotations.updatesite/target/repository
           publish_branch: master
           
 
