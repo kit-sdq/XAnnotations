@@ -10,11 +10,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>11</java.version>
     <tycho.version>2.1.0</tycho.version>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven-compiler.version>3.8.1</maven-compiler.version>
     <maven-clean.version>3.1.0</maven-clean.version>
     <xtext.version>2.22.0</xtext.version>
   </properties>
@@ -30,20 +26,12 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler.version}</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho.version}</version>
         <extensions>true</extensions>
       </plugin>
+
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
@@ -68,6 +56,7 @@
           </environments>
         </configuration>
       </plugin>
+
       <!-- Compiles Xtend code -->
       <plugin>
         <groupId>org.eclipse.xtend</groupId>
@@ -85,6 +74,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- Cleans the xtend-gen folder -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -107,6 +97,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- Creates source versions of bundles -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
@@ -121,6 +112,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- Creates source versions of features -->
       <plugin>
         <groupId>org.eclipse.tycho.extras</groupId>
@@ -136,6 +128,7 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- Correctly handles source features on p2 update site -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
