@@ -6,4 +6,8 @@ tmp/
 *.bak
 *.swp
 *.class
+
+# Maven
 target/
+.polyglot.build.properties
+.mvn/wrapper/maven-wrapper.jar
