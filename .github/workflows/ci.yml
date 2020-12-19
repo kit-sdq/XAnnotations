@@ -7,7 +7,7 @@ on:
     tags:
   pull_request:
   schedule:
-    - cron: '30 2 * * *' # run nightly at 2:30 am
+    - cron: '45 2 * * *' # run nightly at 2:45 am
 
 jobs:
   build:
