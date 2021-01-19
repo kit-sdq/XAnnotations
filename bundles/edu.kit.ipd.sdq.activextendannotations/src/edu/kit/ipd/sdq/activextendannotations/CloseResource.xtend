@@ -77,7 +77,7 @@ class CloseResourceProcessor implements TransformationParticipant<MutableParamet
 			switch (executable) {
 				MutableMethodDeclaration: {
 					if (executable.returnType.isInferred) {
-						executable.addError("A method using @TryResource must declare its return type")
+						executable.addError('''A method using @«CloseResource.simpleName» must declare its return type''')
 						return
 					}
 					val newMethod = type.addMethod('''_«executable.simpleName»_with_safe_resources''')[]
