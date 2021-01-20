@@ -27,16 +27,16 @@ class TypeCopier {
 
 	val typeParameterMappings = new HashMap<TypeReference, TypeReference>
 	val extension TransformationContext context
-	
+
 	new(TypeCopier parent, TransformationContext context) {
 		this(context)
-		typeParameterMappings += parent.typeParameterMappings	
+		typeParameterMappings += parent.typeParameterMappings
 	}
-	
+
 	/**
 	 * Copies all type parameters that appear in the {@code source} type reference to
 	 * the {@code target} type declaration. Afterwards, this copier can be used to replace
-	 *  type parameters that come from {@code source} and are used in {@code target}.
+	 * type parameters that come from {@code source} and are used in {@code target}.
 	 */
 	def copyTypeParametersFrom(MutableTypeParameterDeclarator target, TypeReference source) {
 		val sourceType = source.type
@@ -59,7 +59,7 @@ class TypeCopier {
 	/**
 	 * Copies all type parameters from the {@code source} method to the 
 	 * {@code target} method. Afterwards, this copier can be used to replace
-	 *  type parameters that come from {@code source} and are used in {@code target}.
+	 * type parameters that come from {@code source} and are used in {@code target}.
 	 */
 	def copyTypeParametersFrom(MutableMethodDeclaration target, ResolvedMethod source) {
 		source.resolvedTypeParameters.forEach [ param |
@@ -72,7 +72,7 @@ class TypeCopier {
 	/**
 	 * Copies all type parameters from the {@code source} method to the 
 	 * {@code target} method. Afterwards, this copier can be used to replace
-	 *  type parameters that come from {@code source} and are used in {@code target}.
+	 * type parameters that come from {@code source} and are used in {@code target}.
 	 */
 	def copyTypeParametersFrom(MutableMethodDeclaration target, MutableMethodDeclaration source) {
 		source.typeParameters.forEach [ param |
@@ -98,7 +98,7 @@ class TypeCopier {
 	def TypeReference replaceTypeParameters(TypeReference target) {
 		typeParameterMappings.entrySet.fold(target)[result, mapping|result.replace(mapping.key, mapping.value)]
 	}
-	
+
 	def private TypeReference replace(TypeReference target, TypeReference oldType, TypeReference newType) {
 		if (target == oldType)
 			return newType
@@ -116,7 +116,7 @@ class TypeCopier {
 			return target.arrayComponentType.replace(oldType, newType).newArrayTypeReference
 		return target
 	}
-	
+
 	def private Iterable<TypeParameterDeclaration> getAllReferencedTypeVariables(TypeReference source) {
 		val sourceType = source.type
 		if (sourceType instanceof TypeParameterDeclaration) {
@@ -124,10 +124,13 @@ class TypeCopier {
 		} else if (source.isWildCard) {
 			(if (source.upperBound != object) {
 				source.upperBound.allReferencedTypeVariables
-			} else emptyList()) 
-			 + (if (!source.lowerBound.isAnyType) {
-			 	source.lowerBound.allReferencedTypeVariables
-			 } else emptyList())
+			} else {
+				emptyList()
+			}) + (if (!source.lowerBound.isAnyType) {
+				source.lowerBound.allReferencedTypeVariables
+			} else {
+				emptyList()
+			})
 		} else if (source.isArray) {
 			source.arrayComponentType.allReferencedTypeVariables
 		} else {
