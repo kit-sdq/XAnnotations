@@ -10,16 +10,17 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <tycho.version>2.1.0</tycho.version>
-    <maven-clean.version>3.1.0</maven-clean.version>
-    <xtext.version>2.22.0</xtext.version>
+    <eclipse.version>2022-12</eclipse.version>
+    <tycho.version>3.0.0</tycho.version> <!-- https://search.maven.org/artifact/org.eclipse.tycho/tycho-maven-plugin -->
+    <maven-clean.version>3.2.0</maven-clean.version> <!-- https://search.maven.org/artifact/org.apache.maven.plugins/maven-clean-plugin -->
+    <xtext.version>2.29.0</xtext.version> <!-- https://search.maven.org/artifact/org.eclipse.xtext/org.eclipse.xtext.common.types -->
   </properties>
 
   <repositories>
     <repository>
       <id>Eclipse</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/2020-12</url>
+      <url>http://download.eclipse.org/releases/${eclipse.version}</url>
     </repository>
   </repositories>
 
@@ -62,6 +63,11 @@
               <os>macosx</os>
               <ws>cocoa</ws>
               <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>aarch64</arch>
             </environment>
           </environments>
         </configuration>
@@ -108,7 +114,7 @@
         </executions>
       </plugin>
 
-      <!-- Creates source versions of bundles -->
+      <!-- Creates source versions of bundles and features -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
@@ -120,20 +126,10 @@
               <goal>plugin-source</goal>
             </goals>
           </execution>
-        </executions>
-      </plugin>
-
-      <!-- Creates source versions of features -->
-      <plugin>
-        <groupId>org.eclipse.tycho.extras</groupId>
-        <artifactId>tycho-source-feature-plugin</artifactId>
-        <version>${tycho.version}</version>
-        <executions>
           <execution>
-            <id>source-feature</id>
-            <phase>package</phase>
+            <id>feature-source</id>
             <goals>
-              <goal>source-feature</goal>
+              <goal>feature-source</goal>
             </goals>
           </execution>
         </executions>
