@@ -13,8 +13,5 @@
   <modules>
     <module>../../features/edu.kit.ipd.sdq.activextendannotations.feature</module>
     <module>../../bundles/edu.kit.ipd.sdq.activextendannotations</module>
-    <!-- TODO 
-    <module>../../tests/edu.kit.ipd.sdq.activextendannotations.tests</module>
-    -->
   </modules>
 </project>
