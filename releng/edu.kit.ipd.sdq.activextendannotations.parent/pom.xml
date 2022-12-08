@@ -11,7 +11,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <eclipse.version>2022-12</eclipse.version>
-    <tycho.version>3.0.0</tycho.version> <!-- https://search.maven.org/artifact/org.eclipse.tycho/tycho-maven-plugin -->
+    <tycho.version>3.0.1</tycho.version> <!-- https://search.maven.org/artifact/org.eclipse.tycho/tycho-maven-plugin -->
     <maven-clean.version>3.2.0</maven-clean.version> <!-- https://search.maven.org/artifact/org.apache.maven.plugins/maven-clean-plugin -->
     <xtext.version>2.29.0</xtext.version> <!-- https://search.maven.org/artifact/org.eclipse.xtext/org.eclipse.xtext.common.types -->
   </properties>
